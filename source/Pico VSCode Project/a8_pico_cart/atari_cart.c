@@ -31,6 +31,7 @@
 
 #include "ff.h"
 #include "fatfs_disk.h"
+#include "hardware/clocks.h"
 
 #define ALL_GPIO_MASK   	0x3FFFFFFF
 #define ADDR_GPIO_MASK  	0x00001FFF
@@ -589,7 +590,7 @@ int __not_in_flash_func(emulate_boot_rom)(int atrMode) {
         {   // normal cartridge read
             SET_DATA_MODE_OUT;
             addr = pins & ADDR_GPIO_MASK;
-            gpio_put_masked(DATA_GPIO_MASK, ((uint32_t)(A8PicoCart_rom[addr])) << 13);
+            gpio_put_masked(DATA_GPIO_MASK, ((uint32_t)(A8PicoCart_MR2_rom[addr])) << 13);
             // wait for phi2 low
             while (gpio_get_all() & PHI2_GPIO_MASK) ;
             SET_DATA_MODE_IN;
